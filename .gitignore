@@ -1,0 +1,45 @@
+# OS and editors
+.DS_Store
+Thumbs.db
+.idea/
+.vscode/
+*.iml
+
+# Android and Gradle
+.gradle/
+.kotlin/
+build/
+**/build/
+local.properties
+captures/
+app/release/
+
+# Kotlin/Java
+*.class
+*.jar
+*.war
+*.ear
+
+# Logs and temporary files
+*.log
+*.tmp
+*.temp
+tmp/
+temp/
+
+# Secrets and local credentials
+.env
+.env.*
+*.keystore
+*.jks
+*.p12
+*.pem
+*.key
+service-account*.json
+
+# Codex local app state must not be committed.
+# Project handoff archives belong in codex/conversations/.
+.codex/
+codex/conversations/*raw*
+codex/conversations/*.sqlite
+codex/conversations/*.db
