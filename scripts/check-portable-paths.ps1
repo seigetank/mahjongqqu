@@ -17,12 +17,15 @@ $blockedPatterns = @(
     ("JAVA" + "_HOME=")
 )
 
-$ignoredDirectories = @(
+$ignoredDirectorySegments = @(
     ".git",
     ".gradle",
     ".kotlin",
-    "codex\conversations",
     "build"
+)
+
+$ignoredDirectoryPrefixes = @(
+    "codex/conversations"
 )
 
 $ignoredFiles = @(
@@ -35,8 +38,16 @@ $files = Get-ChildItem -LiteralPath $root -Recurse -File | Where-Object {
     if ($ignoredFiles -contains $_.Name) {
         return $false
     }
-    foreach ($ignored in $ignoredDirectories) {
-        if ($path -like "*\$ignored\*") {
+
+    $relativePath = $path.Substring($root.Length).TrimStart('\', '/').Replace('\', '/')
+    $segments = $relativePath -split '/'
+    foreach ($ignored in $ignoredDirectorySegments) {
+        if ($segments -contains $ignored) {
+            return $false
+        }
+    }
+    foreach ($ignored in $ignoredDirectoryPrefixes) {
+        if ($relativePath -eq $ignored -or $relativePath.StartsWith("$ignored/")) {
             return $false
         }
     }
